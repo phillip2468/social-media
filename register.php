@@ -66,7 +66,25 @@ if(isset($_POST['register_button'])) {
 	//To check if emails match
 	if($email == $email2) {
 
-	} else {
+		//This check ensures that the email has a dot com
+		//address at the end of it
+		if(filter_var($em, FILTER_VALIDATE_EMAIL)) {
+
+			//Ensures that the validated email form is used
+			$em = filter_var($em, FILTER_VALIDATE_EMAIL);
+		}
+
+		//If the emails dont have a valid format, break 
+		//with a message of invalid format
+		else{
+			echo "Invalid format";
+		}
+
+
+	} 
+
+	//If the emails don't match
+	else {
 		echo "Emails don't match"; 
 	}
 
@@ -88,7 +106,7 @@ if(isset($_POST['register_button'])) {
 		//Name - name of variable
 		//Placeholder
 		//Required tag - field must be entered-->
-		
+
 		<form action"register.php" method="POST">
 
 			<input type="text" name="reg_fName" placeholder="First Name" required>
