@@ -68,16 +68,26 @@ if(isset($_POST['register_button'])) {
 
 		//This check ensures that the email has a dot com
 		//address at the end of it
-		if(filter_var($em, FILTER_VALIDATE_EMAIL)) {
+		if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 			//Ensures that the validated email form is used
-			$em = filter_var($em, FILTER_VALIDATE_EMAIL);
+			$email = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+			//Check if the email already exists
+			$e_check = mysqli_query($con,"SELECT email FROM users WHERE email = '$email'");
+
+			//Count the number of rows returned
+			$num_rows = mysqli_num_rows($e_check);
+
+			//If the number of emails that exist isn't zero
+			if($num_rows > 0) {
+				echo "Email aleady in use";
+			}
 		}
 
-		//If the emails dont have a valid format, break 
-		//with a message of invalid format
+		//If the emails dont match
 		else{
-			echo "Invalid format";
+			echo "Emails don't match";
 		}
 
 
