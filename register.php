@@ -32,6 +32,8 @@ if(isset($_POST['register_button'])) {
 	$fname = str_replace('', '', $fname);
 	//Takes the string, lowers all characters, then capitialises the first letter
 	$fname = ucfirst(strtolower($fname));
+	//Stores first name into sesssion variable
+	$_SESSION['reg_fname'] = $fname;
 
 	//Last Name
 	//Strip tags - removes any broken input e.g. html tags
@@ -40,18 +42,25 @@ if(isset($_POST['register_button'])) {
 	$lname = str_replace('', '', $lname);
 	//Takes the string, lowers all characters, then capitialises the first letter
 	$lname = ucfirst(strtolower($lname));
+	//Stores last name into sesssion variable
+	$_SESSION['reg_lname'] = $lname;
 
 	//Email
 	//Strip tags - removes any broken input e.g. html tags
 	$email = strip_tags($_POST['reg_email']);
 	//Removes uncessary spaces
 	$email = str_replace('', '', $email);
+	//Stores email into sesssion variable
+	$_SESSION['reg_email'] = $email;
 
 	//Email 2
 	//Strip tags - removes any broken input e.g. html tags
 	$email2 = strip_tags($_POST['reg_email2']);
 	//Removes uncessary spaces
 	$email2 = str_replace('', '', $email2);
+	//Stores email 2 into sesssion variable
+	$_SESSION['reg_email2'] = $email2;
+
 
 	//Password
 	//Strip tags - removes any broken input e.g. html tags 
@@ -136,15 +145,33 @@ if(isset($_POST['register_button'])) {
 		//Placeholder
 		//Required tag - field must be entered-->
 
+	<!--Note that some inputs also a value property; this makes it so that any fields that were entered correctly, do not disappear when the page is refreshed-->
+
 		<form action"register.php" method="POST">
 
-			<input type="text" name="reg_fname" placeholder="First Name" required>
+			<input type="text" name="reg_fname" placeholder="First Name" value = 
+			"<?php if(isset($_SESSION['reg_fname'])) {
+				echo $_SESSION['reg_fname'];
+			}
+			?>" required>
 			<br>
-			<input type="text" name="reg_lname" placeholder="Last Name" required>
+			<input type="text" name="reg_lname" placeholder="Last Name" value = 
+			"<?php if(isset($_SESSION['reg_lname'])) {
+				echo $_SESSION['reg_lname'];
+			}
+			?>"required>
 			<br>
-			<input type="email" name="reg_email" placeholder="Email" required>
+			<input type="email" name="reg_email" placeholder="Email" value = 
+			"<?php if(isset($_SESSION['reg_email'])) {
+				echo $_SESSION['reg_email'];
+			}
+			?>"required>
 			<br>
-			<input type="email" name="reg_email2" placeholder="Confirm Email" required>
+			<input type="email" name="reg_email2" placeholder="Confirm Email" value = 
+			"<?php if(isset($_SESSION['reg_email2'])) {
+				echo $_SESSION['reg_email2'];
+			}
+			?>"required>
 			<br>
 			<input type="password" name="reg_password" placeholder="Password" required>
 			<br>
