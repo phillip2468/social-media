@@ -1,11 +1,12 @@
 <?php
+session_start();
 $con = mysqli_connect("localhost","root","","social");
 
 if(mysqli_connect_errno()) {
 	echo "Failed to connect:".mysqli_connect_errno();
 }
 
-//Declaring variabes to prevent errors
+//Declaring variabes
 $fname = ""; //First name
 $lname = ""; //Last name
 $em = ""; //email
@@ -21,12 +22,12 @@ if(isset($_POST['register_button'])) {
 	//Registration form values
 
 	//This line says from this variable
-	//Find the value send by this value (reg_fName)
+	//Find the value send by this value (reg_fname)
 	// The $_POST just says take whatever the value of the page is after the page has completed
 
 	//First Name
 	//Strip tags - removes any broken input e.g. html tags
-	$fname = strip_tags($_POST['reg_fName']);
+	$fname = strip_tags($_POST['reg_fname']);
 	//Removes uncessary spaces
 	$fname = str_replace('', '', $fname);
 	//Takes the string, lowers all characters, then capitialises the first letter
@@ -34,7 +35,7 @@ if(isset($_POST['register_button'])) {
 
 	//Last Name
 	//Strip tags - removes any broken input e.g. html tags
-	$lname = strip_tags($_POST['reg_lName']);
+	$lname = strip_tags($_POST['reg_lname']);
 	//Removes uncessary spaces
 	$lname = str_replace('', '', $lname);
 	//Takes the string, lowers all characters, then capitialises the first letter
@@ -84,48 +85,40 @@ if(isset($_POST['register_button'])) {
 				echo "Email aleady in use";
 			}
 		}
-
-		//If the emails dont match
-		else{
-			echo "Emails don't match";
-		}
-
-		//If the number of characters in first name isn't in the ranges
-		if(strlen($fname) > 25 || strlen($fname) < 2) {
-			echo "Your first name must be between 2 and 25 characters";
-		}
-
-		//If the number of characters in first name isn't in the ranges
-		if(strlen($lname) > 25 || strlen($lname) < 2) {
-			echo "Your last name must be between 2 and 25 characters";
-		}
-
-		//Password check
-		if($password != $password2) {
-			echo "Passwords do not match";
-		}
-
-		else{
-			//Checks for letters or numbers
-			if(preg_match('/[^A-Za-z0-9]/', $password)){
-				echo "Your password can only contain english characters or numbers";
-			}
-		}
-
-		if(strlen($password > 30 || strlen($password < 5))) {
-			echo " Your password must be between 5 and 30 characters";
-		}
-
-
-	} 
-
-	//If the emails don't match
-	else {
-		echo "Emails don't match"; 
+	}
+	//Else if the emails dont match
+	else{
+		echo "Emails don't match";
 	}
 
-	
-}
+	//If the number of characters in first name isn't in the ranges
+	if(strlen($fname) > 25 || strlen($fname) < 2) {
+		echo "Your first name must be between 2 and 25 characters";
+	}
+
+	//If the number of characters in first name isn't in the ranges
+	if(strlen($lname) > 25 || strlen($lname) < 2) {
+		echo "Your last name must be between 2 and 25 characters";
+	}
+
+	//Checks to see if passwords match
+	if($password != $password2) {
+		echo "Passwords do not match";
+	}
+
+	//Checks for letters or numbers in password
+	else{
+		if(preg_match('/[^A-Za-z0-9]/', $password)){
+			echo "Your password can only contain english characters or numbers";
+		}
+	}
+
+	//Checks if password is between the ranges specified
+	if(strlen($password) > 30 || strlen($password) < 5) {
+		echo " Your password must be between 5 and 30 characters";
+	}
+
+} 
 
 ?>
 
@@ -145,9 +138,9 @@ if(isset($_POST['register_button'])) {
 
 		<form action"register.php" method="POST">
 
-			<input type="text" name="reg_fName" placeholder="First Name" required>
+			<input type="text" name="reg_fname" placeholder="First Name" required>
 			<br>
-			<input type="text" name="reg_lName" placeholder="Last Name" required>
+			<input type="text" name="reg_lname" placeholder="Last Name" required>
 			<br>
 			<input type="email" name="reg_email" placeholder="Email" required>
 			<br>
